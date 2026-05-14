@@ -49,3 +49,24 @@ def filtered_data(
 def create_student(student:Student):
    students.append(student.model_dump())
    return {"message":"add ho gaya","student":students}
+
+@app.patch("/update/{id}")
+def updated_student(
+    id: int = Path(description="ID of student", example=1, gt=0),
+    updated: Student = None
+):
+    for index, student in enumerate(students):
+        if student["id"] == id:
+            students[index] = updated.model_dump()
+            return {"message": "update ho gaya", "student": updated}
+    raise HTTPException(status_code=404, detail=f"student not found of id {id}")
+
+@app.delete("/delete/{id}")
+def delete_student(
+   id:int=Path(description="ID  of student",example=1,gt=0),
+):
+   for index,student in enumerate(students):
+      if student["id"]==id:
+         deleted_student=students.pop(index)
+         return {"message":"Student deleted succesfully","student":deleted_student}
+   raise HTTPException(status_code=404, detail=f"student not found of id {id}")
