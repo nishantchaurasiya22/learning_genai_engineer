@@ -61,19 +61,5 @@ DevOps        →   Docker, GitHub Actions, NGINX, AWS
 ```
 
 ---
-
-## 📊 Progress
-
-- [x] Stack decided — Python + FastAPI + PostgreSQL + GenAI
-- [x] Repo created
-- [ ] Phase 1 — Python basics complete
-- [ ] Phase 2 — FastAPI + PostgreSQL complete
-- [ ] Phase 3 — First AI chatbot built
-- [ ] Phase 4 — RAG system working
-- [ ] Phase 5 — First AI agent built
-- [ ] Phase 6 — DevOps & App deployed and live
-
----
-
 > *"The best way to learn AI is to build with AI."*  
 > Documenting every step. Starting from zero. Going all in. 🚀
