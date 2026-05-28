@@ -47,7 +47,7 @@ def login(body:LoginSchema,db:Session):
 
 def is_authenticated(request:Request,db:Session):
     try:
-        token=request.headers.get("authorization")
+        token=request.headers.get("authorized")
         if not token:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="Unathorized User")
         token=token.split(" ")[-1]
