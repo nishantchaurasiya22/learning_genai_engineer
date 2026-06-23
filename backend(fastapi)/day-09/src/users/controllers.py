@@ -1,19 +1,19 @@
-from src.users.dtos import UserSchema,LoginSchema
-from pwdlib import PasswordHash
+from sqlalchemy.orm import Session
 import jwt
-from datetime import datetime,timedelta
 from src.config.settings import settings
+from datetime import datetime,timedelta
+from pwdlib import PasswordHash
+from src.users.dtos import UserSchema,LoginUserSchema
 from fastapi import HTTPException,status
-from src.users.models import UserModel
 from sqlalchemy import or_
 pwd=PasswordHash.recommended()
-from sqlalchemy.orm import Session
+from src.users.models import UserModel
 
 def register(body:UserSchema,db:Session):
     is_user=db.query(UserModel).filter(
         or_(
-           UserModel.user_name==body.user_name,
-           UserModel.email==body.email
+            UserModel.user_name==body.user_name,
+            UserModel.email==body.email
         )
     ).first()
     if is_user:
@@ -29,12 +29,12 @@ def register(body:UserSchema,db:Session):
     db.refresh(new_user)
     return new_user
 
-def login(body:LoginSchema,db:Session):
+def login(body:LoginUserSchema,db:Session):
     user=db.query(UserModel).filter(
-        or_(
-            UserModel.email==body.identifier,
-            UserModel.user_name==body.identifier
-        )
+       or_(
+           UserModel.user_name==body.identifier,
+           UserModel.email==body.identifier
+       )
     ).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="User not found")
@@ -43,6 +43,6 @@ def login(body:LoginSchema,db:Session):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="Invalid password")
     EXP_TIME=datetime.now()+timedelta(minutes=settings.EXP_TIME)
     token=jwt.encode({"_id":user.id,"exp":EXP_TIME},settings.SECRET_KEY,settings.ALGORITHM)
-    return {
+    return{
         "token":token
     }

@@ -4,16 +4,14 @@ class UserSchema(BaseModel):
     email:EmailStr
     password:str
 
-class ResponseUserSchema(BaseModel):
+class ReponseUserSchema(BaseModel):
     id:int
     user_name:str
     email:EmailStr
 
-class LoginSchema(BaseModel):
+class LoginUserSchema(BaseModel):
     identifier:str
     password:str
 
     class Config:
         from_attributes=True
-
-    
