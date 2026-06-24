@@ -9,8 +9,9 @@ import jwt
 from fastapi import HTTPException,status
 from src.users.models import UserModel
 from sqlalchemy import or_
+from src.services.mail import send_email
 
-def register(body:UserSchema,db:Session):
+async def register(body:UserSchema,db:Session):
     is_user=db.query(UserModel).filter(
         or_(
             UserModel.user_name==body.user_name,
@@ -28,6 +29,8 @@ def register(body:UserSchema,db:Session):
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
+    res=await send_email([new_user.email])
+    print(res)
     return new_user
     
 def login(body:loginUserSchema,response:Response,db:Session):
