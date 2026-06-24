@@ -1,11 +1,11 @@
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig, MessageType
-from pydantic import EmailStr, BaseModel
 from typing import List
+from src.config.settings import settings
 
 conf = ConnectionConfig(
-    MAIL_USERNAME = "nishantchaurasiya1108@gmail.com",
-    MAIL_PASSWORD = "pgmslvksqrizgctx",
-    MAIL_FROM = "nishantchaurasiya1108@gmail.com",
+    MAIL_USERNAME = settings.MAIL_USERNAME,
+    MAIL_PASSWORD = settings.MAIL_PASSWORD,
+    MAIL_FROM = settings.MAIL_FROM,
     MAIL_PORT = 587,
     MAIL_SERVER = "smtp.gmail.com",
     MAIL_FROM_NAME="fastapi learning",
