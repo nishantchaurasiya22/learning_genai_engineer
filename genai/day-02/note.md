@@ -33,4 +33,3 @@ First it gains knowledge from training data, then it understands the context of 
 
 ## My Understanding
 GPT is not just predicting randomly — it first understands what is actually being asked (context), and only then generates the next word. That's why it doesn't get confused even when the same word can have different meanings.
-
